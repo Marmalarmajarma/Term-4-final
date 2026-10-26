@@ -22,16 +22,16 @@ class Globals:
     running = True
     FRAMES_PER_SECOND = 30
 
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 600
+    SCREEN_WIDTH = 1300
+    SCREEN_HEIGHT = 750
 
     SCORE = 0
 
     # - Set the starting number of lives - #
-    LIVES = 3
+    LIVES = 5
 
     # - Set the Window display name - #
-    window_name = 'GF Game'
+    window_name = 'Digital Footprint'
 
     # - Set the order of the rooms - #
     levels = ["WelcomeScreen", "Maze", "ScrollingShooter", "BreakOut"]
