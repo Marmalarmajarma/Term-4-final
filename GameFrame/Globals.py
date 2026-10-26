@@ -34,13 +34,13 @@ class Globals:
     window_name = 'Digital Footprint'
 
     # - Set the order of the rooms - #
-    levels = ["WelcomeScreen", "Maze", "ScrollingShooter", "BreakOut"]
+    levels = ["WelcomeScreen", "DificultySelection", "GamePlay"]
 
     # - Set the starting level - #
     start_level = 0
 
     # - Set this number to the level you want to jump to when the game ends - #
-    end_game_level = 4
+    end_game_level = 0
 
     # - This variable keeps track of the room that will follow the current room - #
     # - Change this value to move through rooms in a non-sequential manner - #
