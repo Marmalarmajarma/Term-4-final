@@ -28,7 +28,7 @@ class Globals:
     SCORE = 0
 
     # - Set the starting number of lives - #
-    LIVES = 5
+    LIVES = 3
 
     # - Set the Window display name - #
     window_name = 'Digital Footprint'
@@ -53,5 +53,4 @@ class Globals:
 # ###### User Defined Global Variables below this line ######## #
 # ############################################################# #
 
-    total_count = 0
-    destroyed_count = 0
+    dificulty = 1
