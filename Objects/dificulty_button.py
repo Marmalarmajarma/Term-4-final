@@ -15,7 +15,7 @@ class dificulty_button(RoomObject):
     
     def key_pressed(self, key):
 
-        if key[pygame.k_1]:
+        if key[pygame.K_1]:
             Globals.dificulty = 1
             self.room.running = False
 
@@ -23,6 +23,6 @@ class dificulty_button(RoomObject):
             Globals.dificulty = 2
             self.room.running = False
             
-            if key[pygame.k_3]:
-                Globals.dificulty = 3
-                self.room.running = False
+        if key[pygame.K_3]:
+            Globals.dificulty = 3
+            self.room.running = False

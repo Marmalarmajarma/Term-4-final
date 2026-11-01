@@ -54,3 +54,6 @@ class Globals:
 # ############################################################# #
 
     dificulty = 1
+
+    Player_x_speed = 0
+    Player_y_speed = 0
