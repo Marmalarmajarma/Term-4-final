@@ -1,7 +1,9 @@
 from GameFrame import RoomObject
 import pygame
 from GameFrame.Globals import Globals
+from Objects.footprint import footprints
 import random
+
 
 class Player(RoomObject):
     def __init__(self, room, x, y):
@@ -9,99 +11,92 @@ class Player(RoomObject):
 
         self.handle_key_events = True
         self.handle_collision = True
-
-        self.frame_UP = []
-        self.frame_Down = []
-        self.frame_Left = []
-        self.frame_Right = []
-
-        self.right_frame = 0
-        self.left_frame = 0
-        self.up_frame = 0
-        self.down_frame = 0
-
-        for index in range(0, 4):
-            self.frame_UP.append(self.load_image(f"Player/Up/{index}.png"))
-
-        for index in range(0, 4):
-            self.frame_Down.append(self.load_image(f"Player/Down/{index}.png"))
-
-        for index in range(0, 4):
-            self.frame_Left.append(self.load_image(f"Player/Left/{index}.png"))
-
-        for index in range(0, 4):
-            self.frame_Right.append(self.load_image(f"Player/Right/{index}.png"))
-
-        self.set_image(self.frame_Right[0], 100, 140)
+        self.depth = 4
+        self.t = 0
+        image = self.load_image("player.png")
+        self.set_image(image, 140, 140)
 
     def step(self):
         self.update_middle()
-        self.update_animation()
-        
+
+        if Globals.Player_x_speed != 0:
+            if Globals.sneaking == False:
+                self.footprint(10)
+
+        if Globals.Player_y_speed != 0:
+            if Globals.sneaking == False:
+                self.footprint(10)
+
+        self.momentum_update()
+
     def update_middle(self):
-        self.x_middle = (Globals.SCREEN_WIDTH/ 2) - (self.width/ 2)
+        self.x_middle = (Globals.SCREEN_WIDTH / 2) - (self.width/ 2)
         self.y_middle = (Globals.SCREEN_HEIGHT / 2) - (self.height/ 2)
+        Globals.Player_x_mid = (Globals.SCREEN_WIDTH / 2) - (self.width/ 2)
+        Globals.Player_y_mid = (Globals.SCREEN_HEIGHT / 2) - (self.height/ 2)
 
         self.x = self.x_middle
         self.y = self.y_middle
 
-    def update_animation(self):
-        if Globals.Player_x_speed > 0:
-            self.update_Right()
+    def key_pressed(self, key):
+        if Globals.no_mods == False:
+            if key[pygame.K_d]:
+                Globals.Player_x_speed -= 5
 
-        elif Globals.Player_x_speed < 0:
-            self.update_Left()
+            if key[pygame.K_w]:
+                Globals.Player_y_speed += 5
 
-        if Globals.Player_y_speed > 0:
-            self.update_Down()
+            if key[pygame.K_a]:
+                Globals.Player_x_speed += 5
 
-        elif Globals.Player_y_speed < 0:
-            self.update_Up()
+            if key[pygame.K_s]:
+                Globals.Player_y_speed -= 5
 
-    def update_Right(self):
-        self.left_frame = 0
-        self.up_frame = 0
-        self.down_frame = 0
+        if key[pygame.K_SPACE]:
+            Globals.sneaking = True
 
-        if self.right_frame == 3:
-            self.set_image(self.frame_Right[3])
-            self.right_frame = 0
+        else:
+            Globals.sneaking = False
+
+    def momentum_update(self):
+        if Globals.Player_x_speed >= 1:
+            Globals.Player_x_speed -= 1
+
+        if Globals.Player_x_speed == 0:
+            Globals.Player_x_speed = 0
+
+        if Globals.Player_x_speed <= -1:
+            Globals.Player_x_speed += 1
+
+        if Globals.Player_y_speed >= 1:
+            Globals.Player_y_speed -= 1
+
+        if Globals.Player_y_speed == 0:
+            Globals.Player_y_speed = 0
+
+        if Globals.Player_y_speed <= -1:
+            Globals.Player_y_speed += 1
+
+        if Globals.Player_x_speed >= 50:
+            Globals.Player_x_speed = 50
+
+        if Globals.Player_y_speed >= 50:
+            Globals.Player_y_speed = 50
+
+        if Globals.Player_x_speed <= -50:
+            Globals.Player_x_speed = -50
+
+        if Globals.Player_y_speed <= -50:
+            Globals.Player_y_speed = -50
+    
+   
+    def footprint(self, frame):
+        self.t = Globals.t_foot
         
-        self.set_image(self.frame_Right[self.right_frame])
-        self.right_frame += 1
+        if self.t >= frame:
+            self.room.add_room_object(footprints(self.room, Globals.Player_x_mid - (self.x / 3) - 70, Globals.Player_y_mid - (self.y / 3) + 35))
 
-    def update_Left(self):
-        self.right_frame = 0
-        self.up_frame = 0
-        self.down_frame = 0
+            Globals.t_foot = 0
 
-        if self.left_frame == 3:
-            self.set_image(self.frame_Left[3])
-            self.left_frame = 0
-        
-        self.set_image(self.frame_Right[self.right_frame])
-        self.right_frame += 1
-
-    def update_Down(self):
-        self.left_frame = 0
-        self.up_frame = 0
-        self.right_frame = 0
-
-        if self.down_framee == 3:
-            self.set_image(self.frame_Down[3])
-            self.down_frame = 0
-        
-        self.set_image(self.frame_Down[self.down_frame])
-        self.down_frame += 1
-
-    def update_Up(self):
-        self.left_frame = 0
-        self.Right_frame = 0
-        self.down_frame = 0
-
-        if self.up_frame == 3:
-            self.set_image(self.frame_Up[3])
-            self.up_frame = 0
-        
-        self.set_image(self.frame_Up[self.up_frame])
-        self.up_frame += 1
+        else:
+            Globals.t_foot += 1

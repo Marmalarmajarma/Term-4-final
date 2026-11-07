@@ -34,7 +34,7 @@ class Globals:
     window_name = 'Digital Footprint'
 
     # - Set the order of the rooms - #
-    levels = ["WelcomeScreen", "DificultySelection", "GamePlay"]
+    levels = ["WelcomeScreen", "DificultySelection", "controlls", "GamePlay"]
 
     # - Set the starting level - #
     start_level = 0
@@ -57,3 +57,9 @@ class Globals:
 
     Player_x_speed = 0
     Player_y_speed = 0
+    Player_x_mid = 0
+    Player_y_mid = 0
+    no_mods = False
+    sneaking = False
+
+    t_foot = 0
